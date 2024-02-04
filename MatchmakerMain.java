@@ -2,11 +2,9 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class MatchmakerMain {
-        private static HashSet<MatchTask> taskbase;
 
 
         public static void main(String[] args){
-            MatchmakerMain matchmaker = new MatchmakerMain();
 
             // Database of users and skills
 
@@ -50,14 +48,30 @@ public class MatchmakerMain {
 
             HashSet<String> skills4 = new HashSet<>(Set.of("Data Analysis", "Intermediate Java", "Microsoft Excel", "Marketing"));
 
-            User Violet = new User("Violet","Virginia Tech","Computer Science",2027,skills4);
+            User Violet = new User("Violet","Virginia Tech","Computer Science",2028,skills4);
 
             System.out.println("Creating new Task:");
-            System.out.println("Date: February 6, 6:00pm to 6:30pm, Seeking skills: Data Analysis Intermediate Java Microsoft Excel Marketing");
+            System.out.println("Date: February 6, 4:00pm to 5:30pm, Personal Project, Seeking skills: Data Analysis Intermediate Java Microsoft Excel Marketing");
 
             MatchTask VioletTask = new MatchTask(2, 6, JulianSchedule, skills4, "Personal Project", Violet, true);
 
-            
+            System.out.println("Checking Compatibility of new Task with Database:");
+
+            MatchingAlgorithm test1 = new MatchingAlgorithm(VioletTask,JulianTask1);
+            System.out.println(test1.ToString());
+            MatchingAlgorithm backtest1 = new MatchingAlgorithm(JulianTask1, VioletTask);
+            System.out.println(backtest1.ToString());
+
+            MatchingAlgorithm test2 = new MatchingAlgorithm(VioletTask,LizzieTask1);
+            System.out.println(test2.ToString());
+            MatchingAlgorithm backtest2 = new MatchingAlgorithm(LizzieTask1, VioletTask);
+            System.out.println(backtest2.ToString());
+
+            MatchingAlgorithm test3 = new MatchingAlgorithm(VioletTask,KatherineTask1);
+            System.out.println(test3.ToString());
+            MatchingAlgorithm backtest3 = new MatchingAlgorithm(KatherineTask1, VioletTask);
+            System.out.println(backtest3.ToString());
+
 
         }
 }

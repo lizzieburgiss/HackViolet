@@ -20,6 +20,10 @@ public class MatchingAlgorithm {
 
     public double score(){
 
+        if (GetLowestTime() == 100){
+            return 0;
+        }
+
         for (String skill: task1.getSkills()){
             if (task2.getAttendee().getskills().contains(skill)){
                 positive++;
@@ -29,15 +33,15 @@ public class MatchingAlgorithm {
             }
         }
 
-        double current = this.positive / (this.positive + this.negative);
+        double current = (double) this.positive / (this.positive + this.negative);
 
 
         if (task1.getClassYearPreffered()){
             int yeardifference = Math.abs(task1.getAttendee().getYear() - task2.getAttendee().getYear());
-            if (yeardifference <= 4){
+            if (yeardifference >= 4){
                 current = current * 0.6;
             }
-            else if (yeardifference <= 3){
+            else if (yeardifference >= 3){
                 current = current * 0.85;
             }
         }
@@ -45,8 +49,29 @@ public class MatchingAlgorithm {
         return current;
 
     }
+
+    public int GetLowestTime(){
+        int lowest = 100;
+        for (Integer time : task1.getTime()){
+            if (task2.getTime().contains(time) && time < lowest){
+                lowest = time;
+            }
+        }
+        return lowest;
+    }
     
+    public String recommend(){
+        if (score() >= 0.5){
+
+            return " Recommend this match!" + "\n" + "Schedule for time slot " + GetLowestTime();
+        }
+        else {
+            return " Do not recommend this match!";
+        }
+    }
+
     public String ToString(){
-        return task2.getAttendee().getName() + "'s compatibility for " + task2.getAttendee().getName() + "'s project is " + score() + "%";
+
+        return task2.getAttendee().getName() + "'s compatibility for " + task1.getAttendee().getName() + "'s project is " + score()*100 + "%" + recommend() + "\n";
     }
 }
